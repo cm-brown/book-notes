@@ -1,9 +1,36 @@
 <%- include('partials/header.ejs'); %>
 
 <div class="content">
-    <h1>Welcome to Book Notes</h1>
-    <p>A page dedicated to serving you the factual and objective fatcs about books. Notice that there is no comment section nor contact information because all of these opinions are non negotiable, nor subject for any form of debate.</p>
-    <p>Enjoy! -cb</p>
+    <div class="button-container">
+        <a href="/new"><button>New Review</button></a>
+    </div>
+        <div class="content-text">
+            <h1>Welcome to Book Notes</h1>
+            <p>A page dedicated to serving you the factual and objective fatcs about books. Notice that there is no comment section nor contact information because all of these opinions are non negotiable, nor subject for any form of debate.</p>
+            <p>Enjoy! -cb</p>
+            <div class="books">
+                <% if (books && books.length >0) { %>
+                <% books.forEach(book => { %>
+                <img src="https://covers.openlibrary.org/b/olid/<%= book.image %>-M.jpg" alt="<%= book.title %>">
+                <h2><%= book.title %></h2>
+                <p><%= book.attribution %></p>
+                <p><%= book.notes %></p>
+                <p><%= book.review %> out of 5</p>
+                <p><%= book.formatted_date %></p>
+                <div class="book-buttons">
+                    <a class="edit-button" href="/edit/<%= book.id %>"><button>Edit</button></a>
+                    <form class="delete-button" action="/delete/<%= book.id %>" method="POST">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+                <div class="end-of-book"></div>
+                <% }) %>
+                <% } else { %>
+                    <p>No reviews yet...or something broke</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
 </div>
 
 <%- include('partials/footer.ejs'); %>
